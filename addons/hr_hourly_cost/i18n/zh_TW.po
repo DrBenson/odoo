@@ -1,6 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* hr_hourly_cost
+<<<<<<< HEAD
 # 
 # Translators:
 # Wil Odoo, 2023
@@ -18,6 +19,37 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+=======
+#
+# Translators:
+# DrBenson <Benson.Dr@GMail.com>, 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-29 09:39+0000\n"
+"PO-Revision-Date: 2023-11-20 11:39+0800\n"
+"Last-Translator: DrBenson <Benson.Dr@GMail.com>\n"
+"Language-Team: Chinese (Taiwan) (https://www.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#. module: hr_hourly_cost
+#: model_terms:ir.ui.view,arch_db:hr_hourly_cost.view_employee_form
+msgid "Application Settings"
+msgstr "應用程式設定"
+
+#. module: hr_hourly_cost
+#: model:ir.model.fields,field_description:hr_hourly_cost.field_hr_employee__currency_id
+msgid "Currency"
+msgstr "幣別"
+>>>>>>> 0eb26437a8a (Odoo.png: Odoo logo)
 
 #. module: hr_hourly_cost
 #: model:ir.model,name:hr_hourly_cost.model_hr_employee
@@ -28,3 +60,11 @@ msgstr "員工"
 #: model:ir.model.fields,field_description:hr_hourly_cost.field_hr_employee__hourly_cost
 msgid "Hourly Cost"
 msgstr "每小時成本"
+<<<<<<< HEAD
+=======
+
+#. module: hr_hourly_cost
+#: model_terms:ir.ui.view,arch_db:hr_hourly_cost.view_employee_form
+msgid "per hour"
+msgstr "每小時"
+>>>>>>> 0eb26437a8a (Odoo.png: Odoo logo)
