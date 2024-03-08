@@ -1173,7 +1173,16 @@ class Picking(models.Model):
 
     def _pre_action_done_hook(self):
         for picking in self:
-            if all(not move.picked for move in picking.move_ids):
+            has_quantity = False
+            has_pick = False
+            for move in picking.move_ids:
+                if move.picked:
+                    has_pick = True
+                if move.quantity:
+                    has_quantity = True
+                if has_quantity and has_pick:
+                    break
+            if has_quantity and not has_pick:
                 picking.move_ids.picked = True
         if not self.env.context.get('skip_backorder'):
             pickings_to_backorder = self._check_backorder()
@@ -1261,14 +1270,13 @@ class Picking(models.Model):
                     'move_line_ids': [],
                     'backorder_id': picking.id
                 })
+                moves_to_backorder.write({'picking_id': backorder_picking.id, 'picked': False})
+                moves_to_backorder.move_line_ids.package_level_id.write({'picking_id': backorder_picking.id})
+                moves_to_backorder.mapped('move_line_ids').write({'picking_id': backorder_picking.id})
+                backorders |= backorder_picking
                 picking.message_post(
                     body=_('The backorder %s has been created.', backorder_picking._get_html_link())
                 )
-                moves_to_backorder.write({'picking_id': backorder_picking.id})
-                moves_to_backorder.move_line_ids.package_level_id.write({'picking_id': backorder_picking.id})
-                # moves_to_backorder._do_unreserve()
-                moves_to_backorder.mapped('move_line_ids').write({'picking_id': backorder_picking.id})
-                backorders |= backorder_picking
                 if backorder_picking.picking_type_id.reservation_method == 'at_confirm':
                     bo_to_assign |= backorder_picking
         if bo_to_assign:
@@ -1366,7 +1374,7 @@ class Picking(models.Model):
         """
         for (parent, responsible), rendering_context in documents.items():
             note = render_method(rendering_context)
-            parent.activity_schedule(
+            parent.sudo().activity_schedule(
                 'mail.mail_activity_data_warning',
                 date.today(),
                 note=note,

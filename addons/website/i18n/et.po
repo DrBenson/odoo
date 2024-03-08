@@ -14,24 +14,24 @@
 # Andre Roomet <andreroomet@gmail.com>, 2023
 # Katrin Kampura, 2023
 # Eneli Õigus <enelioigus@gmail.com>, 2023
-# Martin Talts <martin.t@avalah.ee>, 2023
 # Egon Raamat <egon@avalah.ee>, 2023
 # Patrick-Jordan Kiudorv, 2023
 # Arma Gedonsky <armagedonsky@hot.ee>, 2023
 # JanaAvalah, 2023
 # Leaanika Randmets, 2023
 # Rivo Zängov <eraser@eraser.ee>, 2023
-# Martin Trigaux, 2023
-# Triine Aavik <triine@avalah.ee>, 2023
-# Anna, 2023
+# Martin Talts <martin.t@avalah.ee>, 2024
+# Martin Trigaux, 2024
+# Anna, 2024
+# Triine Aavik <triine@avalah.ee>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 21:54+0000\n"
+"POT-Creation-Date: 2024-01-29 10:44+0000\n"
 "PO-Revision-Date: 2023-10-26 23:09+0000\n"
-"Last-Translator: Anna, 2023\n"
+"Last-Translator: Triine Aavik <triine@avalah.ee>, 2024\n"
 "Language-Team: Estonian (https://app.transifex.com/odoo/teams/41243/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -981,6 +981,18 @@ msgid ""
 "                        Standard Shipping\n"
 "                    </small>"
 msgstr ""
+"<small class=\"d-flex align-items-center\">\n"
+"                        <i class=\"fa fa-1x fa-fw fa-usd fa-stack me-1\"/>\n"
+"                        Madalaima hinna garantii \n"
+"                    </small>\n"
+"                    <small class=\"d-flex align-items-center\">\n"
+"                        <i class=\"fa fa-1x fa-fw fa-shopping-basket fa-stack me-1\"/>\n"
+"                        30 päeva tagastusõigus\n"
+"                    </small>\n"
+"                    <small class=\"d-flex align-items-center\">\n"
+"                        <i class=\"fa fa-1x fa-fw fa-truck fa-stack me-1\"/>\n"
+"                        Standard kohaletoimetamine\n"
+"                    </small>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
@@ -1053,13 +1065,9 @@ msgstr ""
 msgid ""
 "<small>\n"
 "                            <i class=\"fa fa-1x fa-fw fa-envelope me-1\"/>\n"
-"                             info@yourcompany.example.com\n"
+"                            info@yourcompany.example.com\n"
 "                        </small>"
 msgstr ""
-"<small>\n"
-"                            <i class=\"fa fa-1x fa-fw fa-envelope me-1\"/>\n"
-"                             info@yourcompany.example.com\n"
-"                        </small>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_comparisons
@@ -1078,7 +1086,7 @@ msgstr ""
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.header_text_element
 msgid "<small>Free Returns and Standard Shipping</small>"
-msgstr ""
+msgstr "<small>Tasuta tagastamine ja standard kohaletoimetamine</small>"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.color_combinations_debug_view
@@ -1558,6 +1566,13 @@ msgstr ""
 
 #. module: website
 #. odoo-javascript
+#: code:addons/website/static/src/xml/web_editor.xml:0
+#, python-format
+msgid "AI"
+msgstr ""
+
+#. module: website
+#. odoo-javascript
 #: code:addons/website/static/src/xml/website.editor.xml:0
 #, python-format
 msgid "API Key"
@@ -1591,6 +1606,13 @@ msgstr "Meist"
 #: model_terms:ir.ui.view,arch_db:website.template_footer_minimalist
 msgid "About us"
 msgstr "Meist"
+
+#. module: website
+#. odoo-python
+#: code:addons/website/models/website.py:0
+#, python-format
+msgid "Access Denied"
+msgstr "Juurdepääs keelatud"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__access_token
@@ -1820,6 +1842,11 @@ msgid "Add a new field at the end"
 msgstr "Lisage lõppu uus väli"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.view_view_form_extend
+msgid "Add groups in the \"Access Rights\" tab below."
+msgstr ""
+
+#. module: website
 #. odoo-python
 #: code:addons/website/models/res_lang.py:0
 #, python-format
@@ -1832,6 +1859,13 @@ msgstr "Lisa keeled"
 #, python-format
 msgid "Add new %s"
 msgstr "Lisa uus %s"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/components/dialog/add_page_dialog.xml:0
+#, python-format
+msgid "Add page template"
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.external_snippets
@@ -2179,6 +2213,13 @@ msgstr "Lisa suurepärane alapealkiri"
 #. module: website
 #. odoo-javascript
 #: code:addons/website/static/src/xml/web_editor.xml:0
+#, python-format
+msgid "Animate"
+msgstr ""
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/xml/web_editor.xml:0
 #: code:addons/website/static/src/xml/web_editor.xml:0
 #, python-format
 msgid "Animate text"
@@ -2397,6 +2438,13 @@ msgstr "Taust"
 #, python-format
 msgid "Background Shape"
 msgstr "Tausta kuju"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/xml/website.background.video.xml:0
+#, python-format
+msgid "Background video"
+msgstr ""
 
 #. module: website
 #. odoo-javascript
@@ -2874,7 +2922,10 @@ msgid "Careful"
 msgstr "Ettevaatust"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_dynamic_snippet_carousel/000.xml:0
 #: model_terms:ir.ui.view,arch_db:website.snippets
+#, python-format
 msgid "Carousel"
 msgstr "Karussell"
 
@@ -4297,6 +4348,16 @@ msgid "Display this website when users visit this domain"
 msgstr "Kuva see veebileht, kui kasutajad külastavad seda domeeni"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/components/edit_head_body_dialog/edit_head_body_dialog.xml:0
+#: code:addons/website/static/src/xml/website.editor.xml:0
+#, python-format
+msgid ""
+"Do not copy/paste code you do not understand, this could put your data at "
+"risk."
+msgstr ""
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_mega_menu_cards
 msgid ""
 "Do you need specific information? Our specialists will help you with "
@@ -4637,6 +4698,7 @@ msgstr ""
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website_visitor__email
+#: model_terms:ir.ui.view,arch_db:website.s_share
 #: model_terms:ir.ui.view,arch_db:website.s_website_form_options
 #: model_terms:ir.ui.view,arch_db:website.website_visitor_view_kanban
 #: model_terms:ir.ui.view,arch_db:website.website_visitor_view_tree
@@ -4903,9 +4965,19 @@ msgid "Extra Large"
 msgstr "Eriti suur"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.layout
+msgid "Extra items button"
+msgstr ""
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.searchbar_input_snippet_options
 msgid "Extra link"
 msgstr "Lisalink"
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.footer_custom
+msgid "Extra page"
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -4923,8 +4995,19 @@ msgid "F.A.Q."
 msgstr "KKK"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_facebook_page/000.js:0
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.footer_custom
+#: model_terms:ir.ui.view,arch_db:website.header_social_links
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_share
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
 #: model_terms:ir.ui.view,arch_db:website.snippets
+#: model_terms:ir.ui.view,arch_db:website.template_footer_centered
+#: model_terms:ir.ui.view,arch_db:website.template_footer_headline
 #: model_terms:ir.ui.view,arch_db:website.template_footer_links
+#, python-format
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -5454,6 +5537,15 @@ msgid "Get in touch"
 msgstr "Võta ühendust"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
+#, python-format
+msgid "GitHub"
+msgstr "GitHub"
+
+#. module: website
 #: model:ir.model.fields,field_description:website.field_website__social_github
 msgid "GitHub Account"
 msgstr "GitHubi konto"
@@ -5558,6 +5650,16 @@ msgstr "Google Maps API Key"
 #: model:ir.model.fields,field_description:website.field_website__google_search_console
 msgid "Google Search Console"
 msgstr "Google Search Console"
+
+#. module: website
+#. odoo-python
+#: code:addons/website/models/res_config_settings.py:0
+#: model_terms:ir.ui.view,arch_db:website.res_config_settings_view_form
+#, python-format
+msgid ""
+"Google doesn't need to be pinged anymore. It will automatically fetch your "
+"/sitemap.xml."
+msgstr ""
 
 #. module: website
 #: model:ir.model.fields,help:website.field_res_config_settings__google_search_console
@@ -5688,7 +5790,7 @@ msgstr "Hamburgeri menüü"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.new_page_template_s_carousel
 msgid "Happy Hour"
-msgstr ""
+msgstr "Happy Hour"
 
 #. module: website
 #. odoo-javascript
@@ -5857,7 +5959,10 @@ msgid "High"
 msgstr "Kõrge"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/xml/web_editor.xml:0
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
+#, python-format
 msgid "Highlight"
 msgstr ""
 
@@ -5918,8 +6023,8 @@ msgid "Home page of the current website"
 msgstr "Praeguse veebilehe avaleht"
 
 #. module: website
-#. odoo-python
 #. odoo-javascript
+#. odoo-python
 #: code:addons/website/models/website.py:0
 #: code:addons/website/static/src/client_actions/website_preview/website_preview.xml:0
 #: model:ir.model.fields,field_description:website.field_website_page__is_homepage
@@ -6119,6 +6224,16 @@ msgstr ""
 #. module: website
 #. odoo-javascript
 #: code:addons/website/static/src/components/resource_editor/resource_editor_warning.xml:0
+#: code:addons/website/static/src/xml/website.editor.xml:0
+#, python-format
+msgid ""
+"If you need to add analytics or marketing tags, inject code in your <head> "
+"or <body> instead."
+msgstr ""
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/components/resource_editor/resource_editor_warning.xml:0
 #, python-format
 msgid ""
 "If you need to add analytics or marketing tags, inject code in your header "
@@ -6149,7 +6264,7 @@ msgstr "Pilt"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Image - Text"
-msgstr ""
+msgstr "Pilt - Tekst"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_gallery_options
@@ -6159,7 +6274,7 @@ msgstr "Pildiümbris"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Image Gallery"
-msgstr ""
+msgstr "Pildigalerii"
 
 #. module: website
 #. odoo-javascript
@@ -6205,7 +6320,7 @@ msgstr "Pildi subtiitrid"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Images Wall"
-msgstr ""
+msgstr "Sein piltidega"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
@@ -6410,7 +6525,15 @@ msgid "Inset"
 msgstr "Inset"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_instagram_page/000.js:0
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.header_social_links
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
+#: model_terms:ir.ui.view,arch_db:website.template_footer_headline
 #: model_terms:ir.ui.view,arch_db:website.template_footer_links
+#, python-format
 msgid "Instagram"
 msgstr "Instagram"
 
@@ -7102,6 +7225,19 @@ msgid "Link text"
 msgstr "Lingi tekst"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.footer_custom
+#: model_terms:ir.ui.view,arch_db:website.header_social_links
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_share
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
+#: model_terms:ir.ui.view,arch_db:website.template_footer_centered
+#, python-format
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#. module: website
 #: model:ir.model.fields,field_description:website.field_website__social_linkedin
 msgid "LinkedIn Account"
 msgstr "LinkedIn konto"
@@ -7183,6 +7319,7 @@ msgstr "Laadimine..."
 
 #. module: website
 #. odoo-javascript
+#: code:addons/website/static/src/client_actions/configurator/configurator.xml:0
 #: code:addons/website/static/src/js/editor/snippets.editor.js:0
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 #, python-format
@@ -7274,6 +7411,7 @@ msgid "Management"
 msgstr "Projektide haldus"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_map
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Map"
 msgstr "Kaart"
@@ -7371,6 +7509,13 @@ msgid "Media heading"
 msgstr "Meedia pealkirja stiil"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/js/content/snippets.animation.js:0
+#, python-format
+msgid "Media video"
+msgstr ""
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_three_columns_menu
 msgid "Mediterranean buffet of starters, main dishes and desserts"
 msgstr ""
@@ -7407,6 +7552,11 @@ msgstr "Mega menüü klassid"
 #: model:ir.model.fields,field_description:website.field_website_menu__mega_menu_content
 msgid "Mega Menu Content"
 msgstr "Mega menüü sisu"
+
+#. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_menu_image_menu
+msgid "Mega menu default image"
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_mega_menu_menus_logos
@@ -7956,6 +8106,11 @@ msgid "Next"
 msgstr "Järgmine"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.step_wizard
+msgid "Next:"
+msgstr ""
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_tabs_options
 msgid "No Slide Effect"
 msgstr "Slaidi efekt puudub"
@@ -8387,6 +8542,13 @@ msgstr "Telli kohe"
 #, python-format
 msgid "Other Information:"
 msgstr "Muu info:"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#, python-format
+msgid "Other social network"
+msgstr ""
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.new_page_template_landing_s_text_image
@@ -8825,6 +8987,11 @@ msgid "Pills"
 msgstr "Tabletid"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_share
+msgid "Pinterest"
+msgstr ""
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_website_form_options
 msgid "Placeholder"
 msgstr "Kohatäitja"
@@ -8898,6 +9065,7 @@ msgid "Points of sale"
 msgstr "Kassa"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_popup
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Popup"
@@ -9106,6 +9274,11 @@ msgid "Progress Tracking"
 msgstr ""
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_progress_bar
+msgid "Progress bar"
+msgstr ""
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
 msgid "Projectors"
 msgstr "Projektorid"
@@ -9220,6 +9393,11 @@ msgstr "Qweb"
 #: model:ir.model,name:website.model_ir_qweb_field_contact
 msgid "Qweb Field Contact"
 msgstr "Qweb Kontakti väli"
+
+#. module: website
+#: model:ir.model,name:website.model_ir_qweb_field_html
+msgid "Qweb Field HTML"
+msgstr "Qweb HTML Väli"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_chart_options
@@ -11287,6 +11465,16 @@ msgid ""
 msgstr ""
 
 #. module: website
+#: model:ir.ui.view,website_meta_description:website.contactus
+msgid "This is the contact us page of the website"
+msgstr ""
+
+#. module: website
+#: model:ir.ui.view,website_meta_description:website.homepage
+msgid "This is the homepage of the website"
+msgstr ""
+
+#. module: website
 #. odoo-python
 #: code:addons/website/controllers/form.py:0
 #, python-format
@@ -11360,6 +11548,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Thumbnails"
 msgstr "Pisipilt"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
+#, python-format
+msgid "TikTok"
+msgstr "TikTok"
 
 #. module: website
 #: model:ir.model.fields,field_description:website.field_website__social_tiktok
@@ -11626,7 +11823,17 @@ msgid "Turn every feature into a benefit for your reader."
 msgstr "Muuda iga funktsioon teie lugejate jaoks eeliseks"
 
 #. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.footer_custom
+#: model_terms:ir.ui.view,arch_db:website.header_social_links
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_share
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
+#: model_terms:ir.ui.view,arch_db:website.template_footer_centered
+#: model_terms:ir.ui.view,arch_db:website.template_footer_headline
 #: model_terms:ir.ui.view,arch_db:website.template_footer_links
+#, python-format
 msgid "Twitter"
 msgstr "Twitter"
 
@@ -11668,6 +11875,13 @@ msgid ""
 msgstr ""
 "Tüki '<i class=\"confirm_word\">jah</i>' alla kastikesse, kui te soovite "
 "kinnitada."
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/client_actions/configurator/configurator.xml:0
+#, python-format
+msgid "Type an industry (Fashion, Electronic store, etc...)"
+msgstr ""
 
 #. module: website
 #. odoo-javascript
@@ -12054,6 +12268,7 @@ msgid "Vertical Alignment"
 msgstr "Vertikaaljoondus"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_video
 #: model_terms:ir.ui.view,arch_db:website.snippet_options_background_options
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "Video"
@@ -12756,6 +12971,11 @@ msgid "What you see is what you get"
 msgstr "Mida te näete, seda te ka saate"
 
 #. module: website
+#: model_terms:ir.ui.view,arch_db:website.s_share
+msgid "WhatsApp"
+msgstr "WhatsApp"
+
+#. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_hr_options
 #: model_terms:ir.ui.view,arch_db:website.snippet_options
 msgid "Width"
@@ -12949,6 +13169,13 @@ msgstr "Teil puuduvad õigused avaldamiseks/avalduse maha võtmiseks"
 #. odoo-javascript
 #: code:addons/website/static/src/components/dialog/seo.xml:0
 #, python-format
+msgid "You don't have permissions to edit this record."
+msgstr ""
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/components/dialog/seo.xml:0
+#, python-format
 msgid ""
 "You have hidden this page from search results. It won't be indexed by search"
 " engines."
@@ -12994,6 +13221,15 @@ msgstr "Veebilehti on võimalik hiljem luua. "
 
 #. module: website
 #. odoo-javascript
+#: code:addons/website/static/src/snippets/s_social_media/options.js:0
+#: model_terms:ir.ui.view,arch_db:website.s_mega_menu_odoo_menu
+#: model_terms:ir.ui.view,arch_db:website.s_social_media
+#, python-format
+msgid "YouTube"
+msgstr "YouTube"
+
+#. module: website
+#. odoo-javascript
 #: code:addons/website/static/src/js/send_mail_form.js:0
 #, python-format
 msgid "Your Company"
@@ -13014,6 +13250,15 @@ msgstr ""
 #, python-format
 msgid "Your Email"
 msgstr "Sinu e-post"
+
+#. module: website
+#. odoo-javascript
+#: code:addons/website/static/src/snippets/s_embed_code/000.js:0
+#, python-format
+msgid ""
+"Your Embed Code snippet doesn't have anything to display. Click on Edit to "
+"modify it."
+msgstr ""
 
 #. module: website
 #. odoo-javascript

@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Wil Odoo, 2023
-# Larissa Manderfeld, 2023
+# Larissa Manderfeld, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 21:55+0000\n"
+"POT-Creation-Date: 2024-01-05 12:31+0000\n"
 "PO-Revision-Date: 2023-10-26 23:09+0000\n"
-"Last-Translator: Larissa Manderfeld, 2023\n"
+"Last-Translator: Larissa Manderfeld, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/odoo/teams/41243/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,6 +26,13 @@ msgstr ""
 #, python-format
 msgid "%(carrier)s Error"
 msgstr "Error de %(carrier)s"
+
+#. module: delivery
+#. odoo-python
+#: code:addons/delivery/models/delivery_carrier.py:0
+#, python-format
+msgid "%(old_name)s (copy)"
+msgstr "%(old_name)s (copia)"
 
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.choose_delivery_carrier_view_form
@@ -102,7 +109,7 @@ msgstr "Activo"
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.choose_delivery_carrier_view_form
 msgid "Add"
-msgstr "Añadir"
+msgstr "Agregar"
 
 #. module: delivery
 #. odoo-python
@@ -621,7 +628,7 @@ msgstr "Reglas para poner precios."
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order_line__product_qty
 msgid "Product Qty"
-msgstr "Cant. producto"
+msgstr "Cant. de producto"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_choose_delivery_carrier__delivery_type
@@ -670,7 +677,7 @@ msgstr "Secuencia"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order__is_all_service
 msgid "Service Product"
-msgstr "Producto: servicio"
+msgstr "Producto de servicio"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier__prod_environment
@@ -696,7 +703,7 @@ msgstr "Métodos de envío"
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_sale_order__shipping_weight
 msgid "Shipping Weight"
-msgstr "Peso del envío"
+msgstr "Peso de envío"
 
 #. module: delivery
 #: model:ir.model.fields,help:delivery.field_delivery_carrier__shipping_insurance
@@ -795,7 +802,7 @@ msgstr "Peso total de la orden"
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.choose_delivery_carrier_view_form
 msgid "Update"
-msgstr "Actualización"
+msgstr "Actualizar"
 
 #. module: delivery
 #. odoo-python
@@ -803,7 +810,7 @@ msgstr "Actualización"
 #: model_terms:ir.ui.view,arch_db:delivery.view_order_form_with_carrier
 #, python-format
 msgid "Update shipping cost"
-msgstr "Actualizar costo de envío"
+msgstr "Actualizar coste de envío"
 
 #. module: delivery
 #: model:ir.model.fields,field_description:delivery.field_delivery_price_rule__variable
@@ -848,7 +855,7 @@ msgid ""
 "The following delivery lines (product, invoiced quantity and price) have already been processed:\n"
 "\n"
 msgstr ""
-"¡No puede actualizar los costos de envío de una orden que ya fue facturada!\n"
+"¡No puede actualizar los costes de envío de una orden que ya fue facturada!\n"
 "\n"
 "Las siguientes líneas de entrega (producto, cantidad facturada y precio) ya fueron procesadas:\n"
 "\n"
@@ -866,4 +873,4 @@ msgstr "Prefijos de C. P."
 #. module: delivery
 #: model_terms:ir.ui.view,arch_db:delivery.view_delivery_carrier_form
 msgid "e.g. UPS Express"
-msgstr "Ej, UPS Express"
+msgstr "p. ej. UPS Express"

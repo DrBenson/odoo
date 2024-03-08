@@ -8,7 +8,7 @@ import weUtils from "@web_editor/js/common/utils";
 import options from "@web_editor/js/editor/snippets.options";
 import { NavbarLinkPopoverWidget } from "@website/js/widgets/link_popover_widget";
 import wUtils from "@website/js/utils";
-import {isImageSupportedForStyle} from "@web_editor/js/editor/image_processing";
+import {isImageCorsProtected, isImageSupportedForStyle} from "@web_editor/js/editor/image_processing";
 import "@website/snippets/s_popup/options";
 import { range } from "@web/core/utils/numbers";
 import { _t } from "@web/core/l10n/translation";
@@ -247,7 +247,7 @@ const FontFamilyPickerUserValueWidget = SelectUserValueWidget.extend({
             googleLocalFontsEls.forEach((el, index) => {
                 $(el).append(renderToFragment('website.delete_google_font_btn', {
                     index: index,
-                    local: true,
+                    local: "true",
                 }));
             });
         }
@@ -2206,6 +2206,8 @@ options.registry.collapse = options.Class.extend({
         const panelId = setUniqueId($panel, 'myCollapseTab');
         $tab.attr('data-bs-target', '#' + panelId);
         $tab.data('bs-target', '#' + panelId);
+
+        $tab[0].setAttribute("aria-controls", panelId);
     },
 });
 
@@ -3557,6 +3559,10 @@ options.registry.WebsiteAnimate = options.Class.extend({
             this._toggleImagesLazyLoading(true);
         }
         if (widgetValue === "onHover") {
+            // Pause the history until the hover effect is applied in
+            // "setImgShapeHoverEffect". This prevents saving the intermediate
+            // steps done (in a tricky way) up to that point.
+            this.options.wysiwyg.odooEditor.historyPauseSteps();
             this.trigger_up("option_update", {
                 optionName: "ImageTools",
                 name: "enable_hover_effect",
@@ -3607,7 +3613,7 @@ options.registry.WebsiteAnimate = options.Class.extend({
     /**
      * @override
      */
-    _computeWidgetVisibility(widgetName, params) {
+    async _computeWidgetVisibility(widgetName, params) {
         const hasAnimateClass = this.$target[0].classList.contains("o_animate");
         switch (widgetName) {
             case 'no_animation_opt': {
@@ -3649,7 +3655,10 @@ options.registry.WebsiteAnimate = options.Class.extend({
                 if (hoverEffectOverlayWidget) {
                     const hoverEffectWidget = hoverEffectOverlayWidget.getParent();
                     const imageToolsOpt = hoverEffectWidget.getParent();
-                    return !imageToolsOpt._isDeviceShape() && !imageToolsOpt._isAnimatedShape();
+                    return (
+                        imageToolsOpt._canHaveHoverEffect()
+                        && !await isImageCorsProtected(this.$target[0])
+                    );
                 }
                 return false;
             }
@@ -4025,11 +4034,7 @@ options.registry.GridImage = options.Class.extend({
      * @returns {?HTMLElement}
      */
     _getImageGridItem() {
-        const parentEl = this.$target[0].parentNode;
-        if (parentEl && parentEl.classList.contains('o_grid_item_image')) {
-            return parentEl;
-        }
-        return null;
+        return this.$target[0].closest(".o_grid_item_image");
     },
     /**
      * @override
@@ -4086,8 +4091,15 @@ options.registry.GalleryElement = options.Class.extend({
 });
 
 options.registry.Button = options.Class.extend({
-    forceDuplicateButton: true,
-
+    /**
+     * @override
+     */
+    init() {
+        this._super(...arguments);
+        const isUnremovableButton = this.$target[0].classList.contains("oe_unremovable");
+        this.forceDuplicateButton = !isUnremovableButton;
+        this.forceNoDeleteButton = isUnremovableButton;
+    },
     /**
      * @override
      */
