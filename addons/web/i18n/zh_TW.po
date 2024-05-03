@@ -3,10 +3,10 @@
 # 	* web
 # 
 # Translators:
-# Tony Ng, 2024
 # Alvin Wu <Alvin.Wu.work@gmail.com>, 2024
 # Martin Trigaux, 2024
 # Wil Odoo, 2024
+# Tony Ng, 2024
 # 
 msgid ""
 msgstr ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-29 10:46+0000\n"
 "PO-Revision-Date: 2023-10-26 23:09+0000\n"
-"Last-Translator: Wil Odoo, 2024\n"
+"Last-Translator: Tony Ng, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1810,12 +1810,12 @@ msgstr "可點按"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/core/datetime/datetime_picker_popover.xml:0
 #: code:addons/web/static/src/core/debug/debug_menu_items.xml:0
 #: code:addons/web/static/src/core/debug/debug_menu_items.xml:0
 #: code:addons/web/static/src/core/dialog/dialog.xml:0
 #: code:addons/web/static/src/core/dialog/dialog.xml:0
 #: code:addons/web/static/src/core/domain_selector_dialog/domain_selector_dialog.xml:0
-#: code:addons/web/static/src/core/errors/error_dialogs.xml:0
 #: code:addons/web/static/src/core/errors/error_dialogs.xml:0
 #: code:addons/web/static/src/core/errors/error_dialogs.xml:0
 #: code:addons/web/static/src/core/errors/error_dialogs.xml:0
@@ -3529,8 +3529,8 @@ msgstr "ILY"
 #: code:addons/web/static/src/views/fields/datetime/datetime_field.js:0
 #: code:addons/web/static/src/views/fields/datetime/datetime_field.js:0
 #, python-format
-msgid "ISO-formatted date (e.g. \"2018-12-31\") or \"today\"."
-msgstr "ISO 格式日期（例如 \"2018-12-31\"）或 \"今天\"。"
+msgid "ISO-formatted date (e.g. \"2018-12-31\") or \"%s\"."
+msgstr ""
 
 #. module: web
 #. odoo-javascript
@@ -5025,6 +5025,13 @@ msgstr "處於歸檔狀態，點選以更改它"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/views/fields/many2many_binary/many2many_binary_field.js:0
+#, python-format
+msgid "Number of files"
+msgstr ""
+
+#. module: web
+#. odoo-javascript
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #, python-format
@@ -5130,7 +5137,7 @@ msgstr "Odoo錯誤"
 #: code:addons/web/static/src/core/errors/error_dialogs.js:0
 #, python-format
 msgid "Odoo Network Error"
-msgstr "Odoo 網路錯誤"
+msgstr "Odoo 網絡錯誤"
 
 #. module: web
 #. odoo-javascript
@@ -5558,7 +5565,7 @@ msgstr "請選擇要儲存成匯出列表的欄位..."
 #, python-format
 msgid ""
 "Please use the copy button to report the error to your support service."
-msgstr "請使用複製按鈕將錯誤報告給您的支援服務。"
+msgstr "請使用複製按鈕，向你的技術支援服務報告此錯誤。"
 
 #. module: web
 #. odoo-javascript
@@ -5895,15 +5902,11 @@ msgstr "唯讀："
 #: code:addons/web/static/src/core/confirmation_dialog/confirmation_dialog.js:0
 #, python-format
 msgid ""
-"Ready to make your record disappear into thin air? Are you sure?\n"
-"It will be gone forever!\n"
-"\n"
+"Ready to make your record disappear into thin air? Are you sure?\r\n"
+"It will be gone forever!\r\n"
+"\r\n"
 "Think twice before you click that 'Delete' button!"
 msgstr ""
-"準備讓你的記錄消失得無影無蹤？你確定嗎？\n"
-"刪除後，它將永遠消失！\n"
-"\n"
-"按下「刪除」按鈕前，請三思！"
 
 #. module: web
 #. odoo-javascript
@@ -6855,6 +6858,7 @@ msgstr "T恤"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.xml:0
 #, python-format
 msgid "TIP"
@@ -7042,16 +7046,6 @@ msgid ""
 "that must be fixed for the entire database before continuing working. See "
 "browser console or server logs for details."
 msgstr "樣式編譯失敗。這是管理員或開發人員的錯誤，必須先修理整個資料庫，然後才可繼續。有關詳細資訊，請參閱瀏覽器控制台或伺服器日誌。"
-
-#. module: web
-#. odoo-javascript
-#: code:addons/web/static/src/core/errors/error_dialogs.xml:0
-#, python-format
-msgid ""
-"The style compilation failed, see the error below. This is an administrator "
-"or developer error that must be fixed for the entire database before "
-"continuing working."
-msgstr "樣式編譯失敗，請參閱以下錯誤描述。這是管理員或開發人員的錯誤，必須修復整個資料庫的錯誤後，才能繼續工作。"
 
 #. module: web
 #. odoo-python
@@ -8501,6 +8495,7 @@ msgstr "錨"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
 #: code:addons/web/static/src/core/domain_selector/utils.js:0
 #: code:addons/web/static/src/core/tree_editor/utils.js:0
 #, python-format
@@ -21772,7 +21767,7 @@ msgstr "月經"
 #: code:addons/web/static/src/webclient/menus/menu_providers.js:0
 #, python-format
 msgid "menus"
-msgstr ""
+msgstr "選單"
 
 #. module: web
 #. odoo-javascript
@@ -23266,7 +23261,7 @@ msgstr ""
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.xml:0
 #, python-format
 msgid "on any screen to show shortcut overlays and"
-msgstr ""
+msgstr "在任何螢幕上，以顯示捷徑覆蓋提示，以及"
 
 #. module: web
 #. odoo-javascript
@@ -28243,14 +28238,14 @@ msgstr ""
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #, python-format
 msgid "smiling cat face with heart eyes"
-msgstr ""
+msgstr "微笑、心形眼睛的貓臉"
 
 #. module: web
 #. odoo-javascript
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #, python-format
 msgid "smiling cat face with heart-eyes"
-msgstr ""
+msgstr "微笑、心形眼睛的貓臉"
 
 #. module: web
 #. odoo-javascript
@@ -28280,7 +28275,7 @@ msgstr ""
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #, python-format
 msgid "smiling face with heart eyes"
-msgstr ""
+msgstr "微笑、心形眼睛的臉"
 
 #. module: web
 #. odoo-javascript
@@ -28312,7 +28307,7 @@ msgstr ""
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #, python-format
 msgid "smiling face with open hands"
-msgstr ""
+msgstr "微笑的臉，張開雙手"
 
 #. module: web
 #. odoo-javascript
@@ -28320,7 +28315,7 @@ msgstr ""
 #: code:addons/web/static/src/core/emoji_picker/emoji_data.js:0
 #, python-format
 msgid "smiling face with smiling eyes"
-msgstr ""
+msgstr "微笑的臉和微笑的眼睛"
 
 #. module: web
 #. odoo-javascript
@@ -30439,7 +30434,7 @@ msgstr ""
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.xml:0
 #, python-format
 msgid "to trigger a shortcut."
-msgstr ""
+msgstr "以觸發捷徑。"
 
 #. module: web
 #. odoo-javascript
@@ -33479,6 +33474,13 @@ msgstr ""
 #, python-format
 msgid "— press"
 msgstr "— 按"
+
+#. module: web
+#. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
+#, python-format
+msgid "— search for"
+msgstr ""
 
 #. module: web
 #. odoo-javascript

@@ -16,7 +16,6 @@
 # M Palau <mpalau@tda.ad>, 2023
 # Carles Antoli <carlesantoli@hotmail.com>, 2023
 # Jonatan Gk, 2023
-# Josep Anton Belchi, 2023
 # Marc Tormo i Bochaca <mtbochaca@gmail.com>, 2023
 # martioodo hola, 2023
 # Martin Trigaux, 2023
@@ -26,6 +25,7 @@
 # Ivan Espinola, 2023
 # Manel Fernandez Ramirez <manelfera@outlook.com>, 2024
 # Iván Infantes Castarnado, 2024
+# Josep Anton Belchi, 2024
 # Santiago Payà <santiagopim@gmail.com>, 2024
 # 
 msgid ""
@@ -519,7 +519,7 @@ msgstr "Nom del domini d'àlies"
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_job__alias_full_name
 msgid "Alias Email"
-msgstr ""
+msgstr "Pseudònim de correu"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_recruitment_source__alias_id
@@ -1598,7 +1598,7 @@ msgstr "Formularis d'entrevistes"
 #. module: hr_recruitment
 #: model:res.groups,name:hr_recruitment.group_hr_recruitment_interviewer
 msgid "Interviewer"
-msgstr ""
+msgstr "Entrevistador"
 
 #. module: hr_recruitment
 #: model:ir.model.fields,field_description:hr_recruitment.field_hr_applicant__interviewer_ids

@@ -5,7 +5,8 @@ from freezegun import freeze_time
 from dateutil.relativedelta import relativedelta
 
 from odoo import Command
-from odoo.tests import tagged
+from odoo.exceptions import UserError
+from odoo.tests import tagged, Form
 
 from odoo.addons.hr_holidays.tests.common import TestHrHolidaysCommon
 
@@ -40,6 +41,29 @@ class TestAccrualAllocations(TestHrHolidaysCommon):
                        SET create_date = '%s'
                        WHERE id = %s
                        """ % (date, allocation_id))
+
+    def test_consistency_between_cap_accrued_time_and_maximum_leave(self):
+        accrual_plan = self.env['hr.leave.accrual.plan'].with_context(tracking_disable=True).create({
+            'name': 'Accrual Plan For Test',
+            'level_ids': [(0, 0, {
+                'start_count': 1,
+                'start_type': 'day',
+                'added_value': 1,
+                'added_value_type': 'day',
+                'frequency': 'hourly',
+                'cap_accrued_time': True,
+                'maximum_leave': 10000
+            })],
+        })
+        level = accrual_plan.level_ids
+        level.maximum_leave = 10
+        self.assertEqual(accrual_plan.level_ids.maximum_leave, 10)
+
+        with self.assertRaises(UserError):
+            level.maximum_leave = 0
+
+        level.cap_accrued_time = False
+        self.assertEqual(accrual_plan.level_ids.maximum_leave, 0)
 
     def test_frequency_hourly_calendar(self):
         with freeze_time("2017-12-5"):
@@ -1621,3 +1645,35 @@ class TestAccrualAllocations(TestHrHolidaysCommon):
             accrual_allocation.write({'date_to': '2022-12-31'})
             accrual_allocation._onchange_date_from()
             self.assertAlmostEqual(accrual_allocation.number_of_days, 12, places=0)
+
+    def test_accrual_period_start_past_start_date(self):
+        accrual_plan = self.env['hr.leave.accrual.plan'].with_context(tracking_disable=True).create({
+            'name': 'Monthly accrual',
+            'carryover_date': 'year_start',
+            'accrued_gain_time': 'start',
+            'level_ids': [(0, 0, {
+                'added_value_type': 'day',
+                'start_count': 0,
+                'start_type': 'day',
+                'added_value': 1,
+                'frequency': 'monthly',
+                'first_day_display': '1',
+                'cap_accrued_time': False,
+            })],
+        })
+        with freeze_time('2024-03-01'):
+            with Form(self.env['hr.leave.allocation']) as f:
+                f.allocation_type = "accrual"
+                f.accrual_plan_id = accrual_plan
+                f.employee_ids.add(self.employee_emp)
+                f.holiday_status_id = self.leave_type
+                f.date_from = '2024-01-01'
+                f.name = "Employee Allocation"
+
+            accrual_allocation = f.record
+            accrual_allocation.action_validate()
+            self.assertAlmostEqual(accrual_allocation.number_of_days, 3.0, places=0)
+
+        with freeze_time('2024-04-01'):
+            accrual_allocation._update_accrual()
+            self.assertAlmostEqual(accrual_allocation.number_of_days, 4.0, places=0)
