@@ -1064,7 +1064,7 @@ class AccountMove(models.Model):
 
     @api.depends('invoice_payment_term_id', 'invoice_date', 'currency_id', 'amount_total_in_currency_signed', 'invoice_date_due')
     def _compute_needed_terms(self):
-        for invoice in self:
+        for invoice in self.with_context(bin_size=False):
             is_draft = invoice.id != invoice._origin.id
             invoice.needed_terms = {}
             invoice.needed_terms_dirty = True
@@ -1469,6 +1469,11 @@ class AccountMove(models.Model):
                     del context
                 move.narration = narration or False
 
+    def _get_partner_credit_warning_exclude_amount(self):
+        # to extend in module 'sale'; see there for details
+        self.ensure_one()
+        return 0
+
     @api.depends('company_id', 'partner_id', 'tax_totals', 'currency_id')
     def _compute_partner_credit_warning(self):
         for move in self:
@@ -1478,10 +1483,12 @@ class AccountMove(models.Model):
                            move.move_type == 'out_invoice' and \
                            move.company_id.account_use_credit_limit
             if show_warning:
+                total_field = 'amount_total' if move.currency_id == move.company_currency_id else 'amount_total_company_currency'
+                current_amount = move.tax_totals[total_field]
                 move.partner_credit_warning = self._build_credit_warning_message(
                     move,
-                    current_amount=move.tax_totals['amount_total'],
-                    exclude_current=True,
+                    current_amount=current_amount,
+                    exclude_amount=move._get_partner_credit_warning_exclude_amount(),
                 )
 
     @api.depends('partner_id')
@@ -1489,16 +1496,23 @@ class AccountMove(models.Model):
         for move in self:
             move.partner_credit = move.partner_id.commercial_partner_id.credit
 
-    def _build_credit_warning_message(self, record, current_amount=0.0, exclude_current=False):
+    def _build_credit_warning_message(self, record, current_amount=0.0, exclude_current=False, exclude_amount=0.0):
         """ Build the warning message that will be displayed in a yellow banner on top of the current record
             if the partner exceeds a credit limit (set on the company or the partner itself).
             :param record:                  The record where the warning will appear (Invoice, Sales Order...).
             :param current_amount (float):  The partner's outstanding credit amount from the current document.
-            :param exclude_current (bool):  Whether to exclude `current_amount` from the credit to invoice.
+            :param exclude_current (bool):  DEPRECATED in favor of parameter `exclude_amount`:
+                                            Whether to exclude `current_amount` from the credit to invoice.
+            :param exclude_amount (float):  The amount to subtract from the partner's `credit_to_invoice`.
+                                            Consider the warning on a draft invoice created from a sales order.
+                                            After confirming the invoice the (partial) amount (on the invoice)
+                                            stemming from sales orders will be substracted from the `credit_to_invoice`.
+                                            This will reduce the total credit of the partner.
+                                            This parameter is used to reflect this amount.
             :return (str):                  The warning message to be showed.
         """
         partner_id = record.partner_id.commercial_partner_id
-        credit_to_invoice = max(partner_id.credit_to_invoice - (current_amount if exclude_current else 0), 0)
+        credit_to_invoice = partner_id.credit_to_invoice - exclude_amount
         total_credit = partner_id.credit + credit_to_invoice + current_amount
         if not partner_id.credit_limit or total_credit <= partner_id.credit_limit:
             return ''
@@ -1943,25 +1957,6 @@ class AccountMove(models.Model):
                 raise ValidationError(_("Cannot create a purchase document in a non purchase journal"))
             if move.is_sale_document(include_receipts=True) and move.journal_id.type != 'sale':
                 raise ValidationError(_("Cannot create a sale document in a non sale journal"))
-
-    @api.constrains('ref', 'move_type', 'partner_id', 'journal_id', 'invoice_date', 'state')
-    def _check_duplicate_supplier_reference(self):
-        """ Assert the move which is about to be posted isn't a duplicated move from another posted entry"""
-        move_to_duplicate_moves = self.filtered(lambda m: m.state == 'posted')._fetch_duplicate_supplier_reference(only_posted=True)
-        if any(duplicate_move for duplicate_move in move_to_duplicate_moves.values()):
-            duplicate_move_ids = list(set(
-                move_id
-                for move_ids in (move.ids + duplicate.ids for move, duplicate in move_to_duplicate_moves.items() if duplicate)
-                for move_id in move_ids
-            ))
-            action = self.env['ir.actions.actions']._for_xml_id('account.action_move_line_form')
-            action['domain'] = [('id', 'in', duplicate_move_ids)]
-            action['views'] = [((view_id, 'list') if view_type == 'tree' else (view_id, view_type)) for view_id, view_type in action['views']]
-            raise RedirectWarning(
-                message=_("Duplicated vendor reference detected. You probably encoded twice the same vendor bill/credit note."),
-                action=action,
-                button_text=_("Open list"),
-            )
 
     @api.constrains('line_ids', 'fiscal_position_id', 'company_id')
     def _validate_taxes_country(self):
@@ -2476,7 +2471,7 @@ class AccountMove(models.Model):
                 raise UserError(_('You cannot overwrite the values ensuring the inalterability of the accounting.'))
             if (move.posted_before and 'journal_id' in vals and move.journal_id.id != vals['journal_id']):
                 raise UserError(_('You cannot edit the journal of an account move if it has been posted once.'))
-            if (move.name and move.name != '/' and move.sequence_number not in (0, 1) and 'journal_id' in vals and move.journal_id.id != vals['journal_id']):
+            if (move.name and move.name != '/' and move.sequence_number not in (0, 1) and 'journal_id' in vals and move.journal_id.id != vals['journal_id'] and not move.quick_edit_mode):
                 raise UserError(_('You cannot edit the journal of an account move if it already has a sequence number assigned.'))
 
             # You can't change the date or name of a move being inside a locked period.
@@ -2557,16 +2552,17 @@ class AccountMove(models.Model):
         If a user is a Billing Administrator/Accountant or if fidu mode is activated, we show a warning,
         but they can delete the moves even if it creates a sequence gap.
         """
-        if not (
-            self.user_has_groups('account.group_account_manager')
-            or self.company_id.quick_edit_mode
-            or self._context.get('force_delete')
-            or self.check_move_sequence_chain()
-        ):
-            raise UserError(_(
-                "You cannot delete this entry, as it has already consumed a sequence number and is not the last one in the chain. "
-                "You should probably revert it instead."
-            ))
+        for record in self:
+            if not (
+                record.user_has_groups('account.group_account_manager')
+                or record.company_id.quick_edit_mode
+                or record._context.get('force_delete')
+                or record.check_move_sequence_chain()
+            ):
+                raise UserError(_(
+                    "You cannot delete this entry, as it has already consumed a sequence number and is not the last one in the chain. "
+                    "You should probably revert it instead."
+                ))
 
     def unlink(self):
         self = self.with_context(skip_invoice_sync=True, dynamic_unlink=True)  # no need to sync to delete everything
@@ -3130,20 +3126,26 @@ class AccountMove(models.Model):
             passed_file_data_list.append(file_data)
             attachment = file_data.get('attachment') or file_data.get('originator_pdf')
             if attachment:
-                if attachments_by_invoice[attachment]:
+                if attachments_by_invoice.get(attachment):
                     attachments_by_invoice[attachment] |= invoice
                 else:
                     attachments_by_invoice[attachment] = invoice
 
         file_data_list = attachments._unwrap_edi_attachments()
-        attachments_by_invoice = {
-            attachment: None
-            for attachment in attachments
-        }
+        attachments_by_invoice = {}
         invoices = self
         current_invoice = self
         passed_file_data_list = []
         for file_data in file_data_list:
+
+            # Rogue binaries from mail alias are skipped and unlinked.
+            if (
+                file_data['type'] == 'binary'
+                and self._context.get('from_alias')
+                and not attachments_by_invoice.get(file_data['attachment'])
+            ):
+                close_file(file_data)
+                continue
 
             # The invoice has already been decoded by an embedded file.
             if attachments_by_invoice.get(file_data['attachment']):
@@ -3167,6 +3169,10 @@ class AccountMove(models.Model):
                 close_file(file_data)
                 continue
 
+            extend_with_existing_lines = file_data.get('process_if_existing_lines', False)
+            if current_invoice.invoice_line_ids and not extend_with_existing_lines:
+                continue
+
             decoder = (current_invoice or current_invoice.new(self.default_get(['move_type', 'journal_id'])))._get_edi_decoder(file_data, new=new)
             if decoder:
                 try:
@@ -3180,6 +3186,8 @@ class AccountMove(models.Model):
                             invoices |= invoice
                             current_invoice = self.env['account.move']
                             add_file_data_results(file_data, invoice)
+                        if extend_with_existing_lines:
+                            return attachments_by_invoice
 
                 except RedirectWarning:
                     raise
@@ -4711,14 +4719,8 @@ class AccountMove(models.Model):
             return res
 
         odoobot = self.env.ref('base.partner_root')
-        if attachments and self.state != 'draft':
+        if self.state != 'draft':
             self.message_post(body=_('The invoice is not a draft, it was not updated from the attachment.'),
-                              message_type='comment',
-                              subtype_xmlid='mail.mt_note',
-                              author_id=odoobot.id)
-            return res
-        if attachments and self.invoice_line_ids:
-            self.message_post(body=_('The invoice already contains lines, it was not updated from the attachment.'),
                               message_type='comment',
                               subtype_xmlid='mail.mt_note',
                               author_id=odoobot.id)
@@ -4726,16 +4728,28 @@ class AccountMove(models.Model):
 
         # As we are coming from the mail, we assume that ONE of the attachments
         # will enhance the invoice thanks to EDI / OCR / .. capabilities
+        has_existing_lines = bool(self.invoice_line_ids)
         results = self._extend_with_attachments(attachments, new=bool(self._context.get('from_alias')))
+        if has_existing_lines and not results:
+            self.message_post(body=_('The invoice already contains lines, it was not updated from the attachment.'),
+                              message_type='comment',
+                              subtype_xmlid='mail.mt_note',
+                              author_id=odoobot.id)
+            return res
         attachments_per_invoice = defaultdict(self.env['ir.attachment'].browse)
+        attachments_in_invoices = self.env['ir.attachment']
         for attachment, invoices in results.items():
+            attachments_in_invoices += attachment
             invoices = invoices or self
             for invoice in invoices:
                 attachments_per_invoice[invoice] |= attachment
 
+        # Unlink the unused attachments
+        (attachments - attachments_in_invoices).unlink()
+
         for invoice, attachments in attachments_per_invoice.items():
             if invoice == self:
-                invoice.attachment_ids = attachments.ids
+                invoice.attachment_ids |= attachments
                 new_message.attachment_ids = attachments.ids
                 message_values.update({'res_id': self.id, 'attachment_ids': [Command.link(attachment.id) for attachment in attachments]})
                 super(AccountMove, invoice)._message_post_after_hook(new_message, message_values)
@@ -4746,7 +4760,7 @@ class AccountMove(models.Model):
                     'res_id': invoice.id,
                     'attachment_ids': [Command.link(attachment.id) for attachment in attachments],
                 }
-                invoice.attachment_ids = attachments.ids
+                invoice.attachment_ids |= attachments
                 invoice.message_ids = [Command.set(sub_new_message.id)]
                 super(AccountMove, invoice)._message_post_after_hook(sub_new_message, sub_message_values)
 

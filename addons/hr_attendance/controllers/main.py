@@ -4,6 +4,8 @@
 from odoo import http, _
 from odoo.http import request
 from odoo.tools import float_round
+from odoo.tools.image import image_data_uri
+
 import datetime
 
 class HrAttendance(http.Controller):
@@ -80,7 +82,7 @@ class HrAttendance(http.Controller):
         else:
             employee_list = [{"id": e["id"],
                               "name": e["name"],
-                              "avatar": e["avatar_1024"].decode(),
+                              "avatar": image_data_uri(e["avatar_1024"]),
                               "job": e["job_id"][1] if e["job_id"] else False,
                               "department": {"id": e["department_id"][0] if e["department_id"] else False,
                                              "name": e["department_id"][1] if e["department_id"] else False
@@ -109,8 +111,9 @@ class HrAttendance(http.Controller):
                         'employees': employee_list,
                         'departments': departement_list,
                         'kiosk_mode': company.attendance_kiosk_mode,
-                        'barcode_source': company.attendance_barcode_source
-                    }
+                        'barcode_source': company.attendance_barcode_source,
+                        'lang': company.partner_id.lang,
+                    },
                 }
             )
 

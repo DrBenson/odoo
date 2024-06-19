@@ -120,11 +120,17 @@ class Web_Editor(http.Controller):
         image = Image.new("RGBA", (width, height), color)
         draw = ImageDraw.Draw(image)
 
-        box = draw.textbbox((0, 0), icon, font=font_obj)
-        boxw = box[2] - box[0]
-        boxh = box[3] - box[1]
+        if hasattr(draw, 'textbbox'):
+            box = draw.textbbox((0, 0), icon, font=font_obj)
+            left = box[0]
+            top = box[1]
+            boxw = box[2] - box[0]
+            boxh = box[3] - box[1]
+        else:  # pillow < 8.00 (Focal)
+            left, top, _right, _bottom = image.getbbox()
+            boxw, boxh = draw.textsize(icon, font=font_obj)
+
         draw.text((0, 0), icon, font=font_obj)
-        left, top, right, bottom = image.getbbox()
 
         # Create an alpha mask
         imagemask = Image.new("L", (boxw, boxh), 0)
@@ -757,16 +763,20 @@ class Web_Editor(http.Controller):
         for id, url in response.json().items():
             req = requests.get(url)
             name = '_'.join([media[id]['query'], url.split('/')[-1]])
-            # Need to bypass security check to write image with mimetype image/svg+xml
-            # ok because svgs come from whitelisted origin
-            attachment = request.env['ir.attachment'].with_user(SUPERUSER_ID).create({
+            IrAttachment = request.env['ir.attachment']
+            attachment_data = {
                 'name': name,
                 'mimetype': req.headers['content-type'],
                 'public': True,
                 'raw': req.content,
                 'res_model': 'ir.ui.view',
                 'res_id': 0,
-            })
+            }
+            attachment = get_existing_attachment(IrAttachment, attachment_data)
+            # Need to bypass security check to write image with mimetype image/svg+xml
+            # ok because svgs come from whitelisted origin
+            if not attachment:
+                attachment = IrAttachment.with_user(SUPERUSER_ID).create(attachment_data)
             if media[id]['is_dynamic_svg']:
                 colorParams = werkzeug.urls.url_encode(media[id]['dynamic_colors'])
                 attachment['url'] = '/web_editor/shape/illustration/%s?%s' % (slug(attachment), colorParams)
